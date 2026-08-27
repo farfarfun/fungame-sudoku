@@ -369,7 +369,7 @@ class Sudoku(object):
 def sudoku_generate(mask_rate=0.5):
     while True:
         n = 9
-        m = np.zeros((n, n), np.int)
+        m = np.zeros((n, n), int)
         rg = np.arange(1, n + 1)
         m[0, :] = np.random.choice(rg, n, replace=False)
         try:
@@ -398,7 +398,7 @@ def sudoku_check_solution(m):
     if isinstance(m, list):
         m = np.array(m)
     elif isinstance(m, str):
-        m = np.loadtxt(m, dtype=np.int, delimiter=",")
+        m = np.loadtxt(m, dtype=int, delimiter=",")
     set_rg = set(np.arange(1, m.shape[0] + 1))
     no_good = False
     for i in range(m.shape[0]):
@@ -429,7 +429,7 @@ def sudoku_solve_solution2(array):
     if isinstance(array, list):
         array = np.array(array)
     elif isinstance(array, str):
-        array = np.loadtxt(array, dtype=np.int, delimiter=",")
+        array = np.loadtxt(array, dtype=int, delimiter=",")
     rg = np.arange(array.shape[0] + 1)
     while True:
         mt = array.copy()
