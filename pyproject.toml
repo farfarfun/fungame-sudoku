@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.6"
 dependencies = ["numpy"]
 
+[dependency-groups]
+dev = ["pytest", "pytest-timeout"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
