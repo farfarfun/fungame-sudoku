@@ -2,10 +2,10 @@
 
 import logging
 
-from notetool.tool.log import logger
+from funtool.log import logger
 
-from notegame.games.sudoku import (sudoku_check_solution, sudoku_generate,
-                                   sudoku_solve_solution)
+from fungame.sudoku import (sudoku_check_solution, sudoku_generate,
+                             sudoku_solve_solution)
 
 logger.setLevel(logging.INFO)
 if __name__ == "__main__":
