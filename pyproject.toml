@@ -1,10 +1,13 @@
 [project]
 name = "fungame-sudoku"
-version = "1.0.2"
+version = "1.0.3"
 description = "Sudoku puzzle generator and solver"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["numpy"]
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "牛哥", email = "farfarfun@qq.com" }]
+dependencies = ["numpy>=1.24", "farlog>=1.1.7"]
 
 [dependency-groups]
 dev = ["pytest>=9.0.3", "pytest-timeout"]

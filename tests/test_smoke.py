@@ -1,15 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Lightweight smoke tests for fungame-sudoku.
-
-NOTE ON SCOPE:
-`sudoku_generate()` is intentionally NOT exercised anywhere in this file.
-It has a known pre-existing bug: it fills the grid with no backtracking,
-so on some random draws it can loop forever (see farfarfun/todo-list
-issue #40). Fixing it is explicitly out of scope for this smoke test
-suite; we only cover `Sudoku`, `sudoku_solve_solution()`, and
-`sudoku_check_solution()`, which are backtracking-safe / deterministic
-given fixed inputs.
-"""
+"""Lightweight smoke tests for fungame-sudoku."""
 
 import copy
 
@@ -17,7 +6,12 @@ import numpy as np
 import pytest
 
 import fungame
-from fungame.sudoku import Sudoku, sudoku_check_solution, sudoku_solve_solution
+from fungame.sudoku import (
+    Sudoku,
+    sudoku_check_solution,
+    sudoku_generate,
+    sudoku_solve_solution,
+)
 
 # A known-valid, fully solved 9x9 sudoku grid (ground truth).
 SOLVED_GRID = [
@@ -50,7 +44,6 @@ def test_imports():
     assert hasattr(sudoku_module, "Sudoku")
     assert hasattr(sudoku_module, "sudoku_check_solution")
     assert hasattr(sudoku_module, "sudoku_solve_solution")
-    # sudoku_generate exists in the public API but is never called in this suite.
     assert hasattr(sudoku_module, "sudoku_generate")
 
 
@@ -89,3 +82,28 @@ def test_solve_solution_matches_expected():
 
     # Cross-check with the other public API as well, for robustness.
     assert sudoku_check_solution(solved_list) is True
+
+
+@pytest.mark.timeout(10)
+def test_generate_normal_path():
+    """sudoku_generate() should return a 9x9 grid with roughly mask_rate blanks."""
+    grid = sudoku_generate(mask_rate=0.5)
+    assert grid.shape == (9, 9)
+    # The masked (blank) cells should be a plausible fraction of 81, not all-or-nothing.
+    blanks = int((grid == 0).sum())
+    assert 0 < blanks < 81
+
+
+@pytest.mark.timeout(10)
+def test_generate_mask_rate_zero_is_a_full_valid_solution():
+    """mask_rate=0 should leave every cell filled, forming a valid solved grid."""
+    grid = sudoku_generate(mask_rate=0)
+    assert (grid != 0).all()
+    assert sudoku_check_solution(grid.tolist()) is True
+
+
+@pytest.mark.timeout(10)
+def test_generate_mask_rate_one_is_fully_blank():
+    """mask_rate=1 should blank out every cell."""
+    grid = sudoku_generate(mask_rate=1)
+    assert (grid == 0).all()
