@@ -10,7 +10,7 @@ authors = [{ name = "牛哥", email = "farfarfun@qq.com" }]
 dependencies = ["numpy>=1.24", "farlog>=1.1.7"]
 
 [dependency-groups]
-dev = ["pytest>=9.0.3", "pytest-timeout"]
+dev = ["pytest>=9.0.3", "pytest-timeout>=2.4.0"]
 
 [build-system]
 requires = ["hatchling"]
