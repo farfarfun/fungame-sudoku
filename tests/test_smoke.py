@@ -114,6 +114,19 @@ def test_solve_solution_method2_matches_expected():
 
 
 @pytest.mark.timeout(30)
+def test_solve_solution_method2_accepts_flat_array_and_csv_path(tmp_path):
+    """method=2 的公开输入支持长度为 81 的数组及 CSV 文件路径。"""
+    puzzle = _make_puzzle_from_solved(SOLVED_GRID)
+    flat_puzzle = [value for row in puzzle for value in row]
+    csv_path = tmp_path / "puzzle.csv"
+    csv_path.write_text("\n".join(",".join(str(value) for value in row) for row in puzzle))
+
+    for input_value in (flat_puzzle, str(csv_path)):
+        solved = sudoku_solve_solution(input_value, method=2)
+        assert np.array(solved).tolist() == SOLVED_GRID
+
+
+@pytest.mark.timeout(30)
 def test_solve_solution_unsolvable_puzzle_raises():
     """无解的题目（给定数字本身就互相矛盾）求解时应抛出领域异常 SudokuUnsolvableError。"""
     # 第一行放两个相同的数字 5，直接构成矛盾，确定无解。

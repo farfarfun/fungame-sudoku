@@ -557,6 +557,8 @@ def sudoku_solve_solution2(array: list | str | np.ndarray) -> np.ndarray:
         array = np.array(array)
     elif isinstance(array, str):
         array = np.loadtxt(array, dtype=int, delimiter=",")
+    if array.ndim == 1:
+        array = array.reshape(9, 9)
     rg = np.arange(array.shape[0] + 1)
     while True:
         mt = array.copy()
