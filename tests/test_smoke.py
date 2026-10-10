@@ -119,7 +119,9 @@ def test_solve_solution_method2_accepts_flat_array_and_csv_path(tmp_path):
     puzzle = _make_puzzle_from_solved(SOLVED_GRID)
     flat_puzzle = [value for row in puzzle for value in row]
     csv_path = tmp_path / "puzzle.csv"
-    csv_path.write_text("\n".join(",".join(str(value) for value in row) for row in puzzle))
+    csv_path.write_text(
+        "\n".join(",".join(str(value) for value in row) for row in puzzle)
+    )
 
     for input_value in (flat_puzzle, str(csv_path)):
         solved = sudoku_solve_solution(input_value, method=2)
