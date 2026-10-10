@@ -1,12 +1,18 @@
 # Changelog
 
-## [未发布]
+## [1.0.4] - 2026-10-10
 
 ### 修复
 
 - `dev` 依赖组里 `pytest-timeout` 补上版本下限 `>=2.4.0`，不再是裸依赖名。
 - `src/fungame/sudoku/__init__.py` 补充导出 `SudokuUnsolvableError`，此前只能从
   `fungame.sudoku.core` 内部模块访问，调用方无法在包顶层 `import` 它来做异常捕获。
+- `sudoku_solve_solution(array, method=2)` 补上一维输入的 reshape，长度为 81 的
+  数组与 CSV 文件路径此前只有 `method=1` 能正确处理。
+- PyPI 上的最后一次发布停留在 1.0.2（2024-10-26），元数据仍是 `uv init` 的占位值
+  （summary `Add your description here`、`requires-python >=3.6`、无作者、无依赖声明，
+  产物里还是带 `_init__.py` 拼写错误的旧代码）。本版本按 `funbuild` 流程重新发布，
+  使 `pip install fungame-sudoku` 装到的就是仓库当前实现。
 
 ### 新增
 
@@ -14,6 +20,12 @@
   的 CSV 文件输入、非法棋盘形状、无解题目抛出 `SudokuUnsolvableError`、
   `sudoku_generate()` 非法 `mask_rate` 等公开 API 的正常路径与边界/失败路径测试；
   测试模块说明、docstring、注释统一改为中文。
+
+### 变更
+
+- `pyproject.toml` 补齐 `[project.urls]`（Organization / Repository / Releases）与
+  `maintainers`，作者邮箱同步为 `niuliangtao@qq.com` / `farfarfun@qq.com`，此前 PyPI
+  页面上没有任何项目链接、作者字段为空。
 
 ## [1.0.3] - 2026-09-19
 
